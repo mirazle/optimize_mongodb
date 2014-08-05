@@ -12,8 +12,10 @@ MongoCursor::$timeout = -1;
 $mongo		= new Mongo;
 $dbs		= $mongo->listDBs();
 
+// DB一覧をループでまわす
 foreach( $dbs['databases'] as $index=>$db ){
 
+	print "#######" . $db['name'] . " repair\n";
 	// DB取得
 	$db					= $mongo->{ $db['name'] };
 
@@ -33,6 +35,8 @@ foreach( $dbs['databases'] as $index=>$db ){
 
 		// compact(indexの最適化 & デフラグ)
 		$db->execute( 'db.' . $collection_name . '.compact' );
+
+		print "db." . $collection_name . ".compact \n";
 	}
 }
 
